@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
+#include "TemplateHelpers.h"
 #include "for_each_in_tuple.h"
 
 struct A
@@ -22,6 +24,9 @@ int main()
     auto a = A(42);
     auto b = B("Some data");
     for_each_in_tuple(std::tie(a, b), [](const auto& elem){elem.print();});
+
+    auto tuple = std::tie(a, b);
+    for_each_in_tuple(tuple, [](const auto& elem){elem.print();});
 
     return 0;
 }

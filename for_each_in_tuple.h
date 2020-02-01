@@ -1,24 +1,32 @@
+#pragma once
+
 #include <tuple>
 #include <functional>
+#include <type_traits>
+
+#include "TemplateHelpers.h"
 
 namespace implementation {
     // Compile-time resursion exit condition
-    template<size_t i, typename Fn, typename ... Ts>
-    typename std::enable_if_t<i == 0>
-    for_each_in_tuple(std::tuple<Ts...>&, Fn) {}
+    template<size_t i, typename Tuple, typename Fn>
+    std::enable_if_t<i == 0>
+    for_each_in_tuple(Tuple&&, Fn) {}
 
     // Compile-time recursion function
-    template<size_t i, typename Fn, typename ... Ts>
-    typename std::enable_if_t<i != 0>
-    for_each_in_tuple(std::tuple<Ts...>& tuple, Fn fn)
+    template<size_t i, typename Tuple, typename Fn>
+    std::enable_if_t<i != 0>
+    for_each_in_tuple(Tuple&& tuple, Fn fn)
     {
-        for_each_in_tuple<i - 1>(tuple, fn);
+        for_each_in_tuple<i - 1>(std::forward<Tuple>(tuple), fn);
         fn(std::get<i - 1>(tuple));
     }
 } // namespace implementation
 
-template<typename Fn, typename ... Ts>
-void for_each_in_tuple(std::tuple<Ts...>&& tuple, Fn fn)
+template<typename Container, typename Fn>
+std::enable_if_t<TemplateHelpers::is_specialization_v<Container, std::tuple>>
+for_each_in_tuple(Container&& container, Fn fn)
 {
-    implementation::for_each_in_tuple<sizeof...(Ts)>(tuple, fn);
+    using Container_t = std::remove_reference_t<Container>;
+    constexpr auto size = std::tuple_size_v<Container_t>;
+    implementation::for_each_in_tuple<size>(std::forward<Container>(container), fn);
 }
