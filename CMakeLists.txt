@@ -10,6 +10,7 @@ set (SRC
 	template_helpers.h
 	compare_tuples.h
 	tuple_of_comparators.h
+	tuple_helpers.h
 	main.cpp
 )
 

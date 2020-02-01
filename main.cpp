@@ -62,5 +62,7 @@ int main()
 
     compare_tuples(tuple, std::tie(a, b, c), fns);
 
+    std::tuple<std::less<int>, std::greater<double>> test;
+
     return 0;
 }
