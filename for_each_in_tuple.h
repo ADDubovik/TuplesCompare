@@ -12,7 +12,7 @@ namespace implementation {
     std::enable_if_t<i == 0>
     for_each_in_tuple(Tuple&&, Fn) {}
 
-    // Compile-time recursion function
+    // Compile-time recursive function
     template<size_t i, typename Tuple, typename Fn>
     std::enable_if_t<i != 0>
     for_each_in_tuple(Tuple&& tuple, Fn fn)

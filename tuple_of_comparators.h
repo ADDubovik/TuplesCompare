@@ -33,8 +33,12 @@ namespace implementation {
 template<typename Tuple>
 struct tuple_of_comparators
 {
+private:
     static_assert (template_helpers::is_specialization_v<Tuple, std::tuple>);
-    using type = typename implementation::tuple_of_comparators<std::tuple_size_v<Tuple>, Tuple>::result;
+    using tuple_clear = std::remove_reference_t<Tuple>;
+
+public:
+    using type = typename implementation::tuple_of_comparators<std::tuple_size_v<tuple_clear>, tuple_clear>::result;
 };
 
 template<typename Tuple>

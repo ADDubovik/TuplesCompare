@@ -12,6 +12,8 @@ struct A
     int data;
     A(int data_) : data(data_) {}
     void print() const {std::cout << "A::data: " << data << std::endl;}
+    bool operator<(const A& oth) const {return data < oth.data;}
+    bool operator>(const A& oth) const {return data > oth.data;}
 };
 
 struct B
@@ -19,6 +21,8 @@ struct B
     std::string data;
     B(std::string data_) : data(std::move(data_)) {}
     void print() const {std::cout << "B::data: " << data << std::endl;}
+    bool operator<(const B& oth) const {return data < oth.data;}
+    bool operator>(const B& oth) const {return data > oth.data;}
 };
 
 struct C
@@ -26,6 +30,8 @@ struct C
     double data;
     C(double data_) : data(data_) {}
     void print() const {std::cout << "C::data: " << data << std::endl;}
+    bool operator<(const C& oth) const {return data < oth.data;}
+    bool operator>(const C& oth) const {return data > oth.data;}
 };
 
 int main()
@@ -48,7 +54,13 @@ int main()
 
     std::cout << typeid(std::tuple<FnA, FnB, FnC>).name() << std::endl;
 
-    std::cout << typeid(tuple_of_comparators_t<decltype(tuple)>).name() << std::endl;
+    using Fns = tuple_of_comparators_t<decltype(tuple)>;
+
+    std::cout << typeid(Fns).name() << std::endl;
+
+    auto fns = Fns(std::less(), std::greater(), std::less());
+
+    compare_tuples(tuple, std::tie(a, b, c), fns);
 
     return 0;
 }
