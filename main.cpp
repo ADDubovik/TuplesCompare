@@ -4,6 +4,8 @@
 
 #include "template_helpers.h"
 #include "for_each_in_tuple.h"
+#include "compare_tuples.h"
+#include "tuple_types.h"
 
 struct A
 {
@@ -19,14 +21,34 @@ struct B
     void print() const {std::cout << "B::data: " << data << std::endl;}
 };
 
+struct C
+{
+    double data;
+    C(double data_) : data(data_) {}
+    void print() const {std::cout << "C::data: " << data << std::endl;}
+};
+
 int main()
 {
     auto a = A(42);
     auto b = B("Some data");
-    for_each_in_tuple(std::tie(a, b), [](const auto& elem){elem.print();});
+    auto c = C(3.1415926);
+    for_each_in_tuple(std::tie(a, b, c), [](const auto& elem){elem.print();});
 
-    auto tuple = std::tie(a, b);
+    auto tuple = std::tie(a, b, c);
     for_each_in_tuple(tuple, [](const auto& elem){elem.print();});
+
+    using FnA = std::function<bool(const A&, const A&)>;
+    using FnB = std::function<bool(const B&, const B&)>;
+    using FnC = std::function<bool(const C&, const C&)>;
+
+    std::cout << typeid(FnA).name() << std::endl;
+    std::cout << typeid(FnB).name() << std::endl;
+    std::cout << typeid(FnC).name() << std::endl;
+
+    std::cout << typeid(std::tuple<FnA, FnB, FnC>).name() << std::endl;
+
+    std::cout << typeid(tuple_types_t<decltype(tuple)>).name() << std::endl;
 
     return 0;
 }

@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set (SRC
 	for_each_in_tuple.h
 	template_helpers.h
+	compare_tuples.h
+	tuple_types.h
 	main.cpp
 )
 
