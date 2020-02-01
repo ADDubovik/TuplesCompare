@@ -9,7 +9,7 @@ set (SRC
 	for_each_in_tuple.h
 	template_helpers.h
 	compare_tuples.h
-	tuple_types.h
+	tuple_of_comparators.h
 	main.cpp
 )
 

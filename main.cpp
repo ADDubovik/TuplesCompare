@@ -5,7 +5,7 @@
 #include "template_helpers.h"
 #include "for_each_in_tuple.h"
 #include "compare_tuples.h"
-#include "tuple_types.h"
+#include "tuple_of_comparators.h"
 
 struct A
 {
@@ -48,7 +48,7 @@ int main()
 
     std::cout << typeid(std::tuple<FnA, FnB, FnC>).name() << std::endl;
 
-    std::cout << typeid(tuple_types_t<decltype(tuple)>).name() << std::endl;
+    std::cout << typeid(tuple_of_comparators_t<decltype(tuple)>).name() << std::endl;
 
     return 0;
 }
