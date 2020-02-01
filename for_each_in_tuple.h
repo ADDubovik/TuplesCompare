@@ -4,7 +4,7 @@
 #include <functional>
 #include <type_traits>
 
-#include "TemplateHelpers.h"
+#include "template_helpers.h"
 
 namespace implementation {
     // Compile-time resursion exit condition
@@ -23,7 +23,7 @@ namespace implementation {
 } // namespace implementation
 
 template<typename Container, typename Fn>
-std::enable_if_t<TemplateHelpers::is_specialization_v<Container, std::tuple>>
+std::enable_if_t<template_helpers::is_specialization_v<Container, std::tuple>>
 for_each_in_tuple(Container&& container, Fn fn)
 {
     using Container_t = std::remove_reference_t<Container>;

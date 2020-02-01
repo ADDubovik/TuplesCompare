@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace TemplateHelpers {
+namespace template_helpers {
     // usage:
     // static_assert(is_specialization<std::vector<int>, std::vector>());
     template <class T, template <class...> class Template>

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set (SRC
 	for_each_in_tuple.h
-	TemplateHelpers.h
+	template_helpers.h
 	main.cpp
 )
 
